@@ -12,6 +12,15 @@ const Index = () => {
     message: ''
   });
 
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      window.open(`https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`, '_blank');
+    }
+  };
+
   const services = [
     {
       icon: 'Sparkles',
@@ -71,16 +80,33 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       <nav className="fixed top-0 w-full bg-background/80 backdrop-blur-lg border-b z-50">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-heading font-bold gradient-text">ServicePro</h1>
-          <div className="hidden md:flex gap-6">
-            <a href="#home" className="hover:text-primary transition-colors">Главная</a>
-            <a href="#services" className="hover:text-primary transition-colors">Услуги</a>
-            <a href="#blog" className="hover:text-primary transition-colors">Блог</a>
-            <a href="#about" className="hover:text-primary transition-colors">О нас</a>
-            <a href="#contact" className="hover:text-primary transition-colors">Контакты</a>
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex justify-between items-center mb-3">
+            <h1 className="text-2xl font-heading font-bold gradient-text">ServicePro</h1>
+            <div className="hidden md:flex gap-6">
+              <a href="#home" className="hover:text-primary transition-colors">Главная</a>
+              <a href="#services" className="hover:text-primary transition-colors">Услуги</a>
+              <a href="#blog" className="hover:text-primary transition-colors">Блог</a>
+              <a href="#about" className="hover:text-primary transition-colors">О нас</a>
+              <a href="#contact" className="hover:text-primary transition-colors">Контакты</a>
+            </div>
+            <Button className="hidden md:block">Связаться</Button>
           </div>
-          <Button className="hidden md:block">Связаться</Button>
+          <form onSubmit={handleSearch} className="relative max-w-2xl mx-auto">
+            <Input
+              type="text"
+              placeholder="Поиск через Google..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pr-10 bg-background/60"
+            />
+            <button
+              type="submit"
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Icon name="Search" size={20} />
+            </button>
+          </form>
         </div>
       </nav>
 
