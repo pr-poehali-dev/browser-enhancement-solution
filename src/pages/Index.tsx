@@ -14,12 +14,26 @@ const Index = () => {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearch, setShowSearch] = useState(false);
+  const [searchHistory, setSearchHistory] = useState<string[]>([]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       setShowSearch(true);
+      setSearchHistory(prev => {
+        const newHistory = [searchQuery, ...prev.filter(q => q !== searchQuery)];
+        return newHistory.slice(0, 5);
+      });
     }
+  };
+
+  const handleHistoryClick = (query: string) => {
+    setSearchQuery(query);
+    setShowSearch(true);
+  };
+
+  const clearHistory = () => {
+    setSearchHistory([]);
   };
 
   const services = [
@@ -93,21 +107,48 @@ const Index = () => {
             </div>
             <Button className="hidden md:block">Связаться</Button>
           </div>
-          <form onSubmit={handleSearch} className="relative max-w-2xl mx-auto">
-            <Input
-              type="text"
-              placeholder="Поиск через Google..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pr-10 bg-background/60"
-            />
-            <button
-              type="submit"
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary transition-colors"
-            >
-              <Icon name="Search" size={20} />
-            </button>
-          </form>
+          <div className="max-w-2xl mx-auto">
+            <form onSubmit={handleSearch} className="relative">
+              <Input
+                type="text"
+                placeholder="Поиск через Google..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pr-10 bg-background/60"
+              />
+              <button
+                type="submit"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary transition-colors"
+              >
+                <Icon name="Search" size={20} />
+              </button>
+            </form>
+            {searchHistory.length > 0 && (
+              <div className="mt-2 bg-background/60 rounded-lg border p-3">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-xs font-medium text-muted-foreground">История поиска</span>
+                  <button
+                    onClick={clearHistory}
+                    className="text-xs text-muted-foreground hover:text-destructive transition-colors"
+                  >
+                    Очистить
+                  </button>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {searchHistory.map((query, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleHistoryClick(query)}
+                      className="text-sm px-3 py-1 rounded-full bg-muted hover:bg-primary hover:text-primary-foreground transition-colors"
+                    >
+                      <Icon name="Clock" size={12} className="inline mr-1" />
+                      {query}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </nav>
 
