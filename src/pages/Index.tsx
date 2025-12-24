@@ -13,11 +13,12 @@ const Index = () => {
   });
 
   const [searchQuery, setSearchQuery] = useState('');
+  const [showSearch, setShowSearch] = useState(false);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      window.open(`https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`, '_blank');
+      setShowSearch(true);
     }
   };
 
@@ -109,6 +110,27 @@ const Index = () => {
           </form>
         </div>
       </nav>
+
+      {showSearch && (
+        <div className="fixed inset-0 bg-background z-50 overflow-auto pt-32 px-4">
+          <div className="container mx-auto max-w-5xl">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-heading font-bold">Результаты поиска: {searchQuery}</h2>
+              <Button variant="outline" onClick={() => setShowSearch(false)}>
+                <Icon name="X" size={20} className="mr-2" />
+                Закрыть
+              </Button>
+            </div>
+            <div className="bg-card rounded-lg border-2 overflow-hidden" style={{ height: 'calc(100vh - 200px)' }}>
+              <iframe
+                src={`https://www.google.com/search?igu=1&q=${encodeURIComponent(searchQuery)}`}
+                className="w-full h-full"
+                title="Google Search Results"
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       <section id="home" className="pt-32 pb-20 px-4">
         <div className="container mx-auto">
