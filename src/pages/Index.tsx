@@ -109,7 +109,7 @@ const Index = () => {
       <section id="services" className="py-20 px-4 bg-muted/30">
         <div className="container mx-auto">
           <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-4xl md:text-5xl font-heading font-bold mb-4">Наши услуги</h2>
+            <h2 className="text-4xl md:text-5xl font-heading mb-4 font-bold">Наши возможности</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Полный спектр решений для развития вашего бизнеса
             </p>
