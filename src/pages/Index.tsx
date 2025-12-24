@@ -196,9 +196,7 @@ const Index = () => {
         <div className="container mx-auto">
           <div className="text-center mb-16 animate-fade-in">
             <h2 className="text-4xl md:text-5xl font-heading mb-4 font-bold">Наши возможности</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Полный спектр решений для развития вашего бизнеса
-            </p>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Мы создаём браузер для вашего лёгкого пользования! Браузер пока ещё в демо-режиме.</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map((service, index) => (
